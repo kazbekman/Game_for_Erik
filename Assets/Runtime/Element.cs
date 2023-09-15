@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Main
+namespace Runtime
 {
     public class Element : MonoBehaviour
     {

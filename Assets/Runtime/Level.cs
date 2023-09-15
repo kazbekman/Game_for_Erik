@@ -1,24 +1,15 @@
+using System.Collections;
 using UnityEngine;
 
-namespace Main
+namespace Runtime
 {
-    public class Level : Entity
+    public abstract class Level : MonoBehaviour
     {
-        [SerializeField] private LevelType _type;
         [SerializeField] private Element _element;
-        [SerializeField] private int _maxCount;
 
-        public void Generate()
-        {
-            switch (_type)
-            {
-                case LevelType.Common:
-                    break;
-                case LevelType.Generating:
-                    break;
-                default:
-                    break;
-            }
-        }
+        [Range(5, 10)]
+        [SerializeField] private int _maxCharactersCount;
+
+        protected Pool pool;
     }
 }

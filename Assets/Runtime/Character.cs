@@ -2,29 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Main
+namespace Runtime
 {
-    public class Character : Entity
+    public class Character : Entity, IGenerator
     {
-        [SerializeField] private Element _firstElement;
-        [SerializeField] private Element _secondElement;
-        [SerializeField] private Element _thirdElement;
-        [SerializeField] private int _coinsCount;
-
-        [SerializeField] private float _speed;
+        [SerializeField] private Element _hair;
+        [SerializeField] private Element _head;
+        [SerializeField] private Element _body;
+        [SerializeField] private int _coinsForTick;
+        [SerializeField] private float _generateSpeed;
+        [Min(1)] [SerializeField] private int _evolution;
+        [SerializeField] private float _movementSpeed;
         [SerializeField] private float _gravity;
+        [SerializeField] private int _weight;
 
-        private void Update()
+
+        public int Evolution => _evolution;
+        public int CoinsForTick => _coinsForTick * Evolution;
+        public float GenerateSpeed => _generateSpeed;
+        public int Weight => _weight;
+
+        private void OnEnable()
         {
-            float deltaX = Input.GetAxis("Horizontal");
-            Vector3 nextPosition = new Vector3(deltaX, 0, 0);
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + nextPosition, _speed * Time.fixedDeltaTime);
+            StartCoroutine(Generate());
         }
-        public void Move()
+
+        private void OnDisable()
         {
-            float deltaX = Input.GetAxis("Horizontal");
-            Vector3 nextPosition = new Vector3(deltaX, 0, 0);
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + nextPosition, _speed * Time.fixedDeltaTime);
+            StopCoroutine(Generate());
+        }
+
+        public IEnumerator Generate()
+        {
+            while (gameObject.activeInHierarchy)
+            {
+                GameBoard.AddCoins(CoinsForTick);
+                yield return new WaitForSeconds(GenerateSpeed);
+            }
         }
     }
 }

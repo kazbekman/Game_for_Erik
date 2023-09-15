@@ -1,8 +1,7 @@
 using UnityEngine;
 
-namespace Main
+namespace Runtime
 {
-    [RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D))]
     public class Entity : MonoBehaviour
     {
 
