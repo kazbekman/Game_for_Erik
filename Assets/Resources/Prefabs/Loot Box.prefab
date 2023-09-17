@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -9
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.7735849, g: 0.6546262, b: 0.33935562, a: 1}
   m_FlipX: 0
@@ -99,7 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701ece95491b3ea40bb8916de5c6e31d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dropOutCharacters: []
+  _dropOutCharacters:
+  - {fileID: 5568985379037857637, guid: b240c90fc439a424ab6f5e08d68751b5, type: 3}
 --- !u!50 &314868905818310903
 Rigidbody2D:
   serializedVersion: 4
@@ -114,7 +115,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: 0.45
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ namespace Runtime
         public int CoinsForUpgrade => _coinsForUpgrade * _level;
         public int Level => _level;
         public float GenerateTime => _generateTime;
+
+        public event Action OnTowerUpgraded;
 
         private void Awake()
         {
@@ -35,24 +38,27 @@ namespace Runtime
         {
             while (gameObject.activeInHierarchy)
             {
-                LootBox lootBox = pool.GetFreeElement() as LootBox;
-
-                yield return new WaitForSeconds(_generateTime);
+                if (currentCharactersCount <= maxCharactersCount)
+                {
+                    LootBox lootBox = pool.GetFreeElement() as LootBox;
+                    lootBox.Init(this);
+                    yield return new WaitForSeconds(_generateTime);
+                }
+                yield return null;
             }
         }
 
-        public bool TryToUpgrade()
+        public void TryToUpgrade()
         {
             if (GameBoard.TryRemoveCoins(CoinsForUpgrade))
             {
                 _level++;
-                _generateTime -= _generateTime * 0.1f;
-                return true;
+                _generateTime -= _generateTime * 0.02f;
+                OnTowerUpgraded?.Invoke();
             }
             else
             {
                 Debug.Log("Не хватает денег!");
-                return false;
             }
         }
     }
